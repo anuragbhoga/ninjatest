@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql:8.0
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: maxwell_db  # This is optional if you want to create a default database
+            - name: MYSQL_USER
+              value: maxwell_user  # Optional if you have specific user details
+            - name: MYSQL_PASSWORD
+              value: maxwell_password  # Optional user password
+            
+            # MySQL Charset Configuration
+            - name: MYSQL_CHARSET
+              value: utf8mb4
+            - name: MYSQL_COLLATION
+              value: utf8mb4_unicode_ci
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

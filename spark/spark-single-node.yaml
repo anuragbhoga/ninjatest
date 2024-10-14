@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-single-node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark
+  template:
+    metadata:
+      labels:
+        app: spark
+    spec:
+      containers:
+      - name: spark
+        image: bitnami/spark:latest
+        env:
+        - name: SPARK_MODE
+          value: "master"
+        - name: SPARK_WORKER_INSTANCES
+          value: "1"
+        ports:
+        - containerPort: 7077  # Spark master port
+        - containerPort: 8080  # Spark UI port
+        - containerPort: 8081  # Spark Worker UI port
