@@ -1,0 +1,2 @@
+v1
+{"path":"file:///opt/bitnami/spark/output/part-00000-18ce82c8-dc1a-49f4-9bcd-b0e2e87897a4-c000.csv","size":10,"isDir":false,"modificationTime":1727156685450,"blockReplication":1,"blockSize":33554432,"action":"add"}
